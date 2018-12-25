@@ -1,7 +1,10 @@
 package de.htwk.musicmanager.data.source
 
+import android.app.Application
 import android.content.Context
+import androidx.lifecycle.LiveData
 import de.htwk.musicmanager.data.modelclasses.Artist
+import de.htwk.musicmanager.data.source.database.entities.Album
 import de.htwk.musicmanager.data.source.network.LastFMService
 import de.htwk.musicmanager.data.source.network.UnwrapInterceptor
 import okhttp3.OkHttpClient
@@ -9,7 +12,11 @@ import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class AppRepository private constructor(c: Context): Repository {
+class AlbumRepository private constructor(c: Context): Repository {
+
+    override fun getStoredAlbums(): LiveData<List<Album>> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     private lateinit var lastFMService: LastFMService
 
@@ -40,6 +47,7 @@ class AppRepository private constructor(c: Context): Repository {
     }
 
 
+
     /**
      * The Singleton-Implementation is based on this sample:
      * https://github.com/googlesamples/android-architecture-components/blob/master/BasicRxJavaSampleKotlin
@@ -48,11 +56,11 @@ class AppRepository private constructor(c: Context): Repository {
     companion object {
 
         @Volatile
-        var instance: AppRepository? = null
+        var instance: AlbumRepository? = null
 
-        fun getInstance(context: Context): AppRepository =
+        fun getInstance(application: Application): AlbumRepository =
                 instance ?: synchronized(this)  {
-                    instance ?: AppRepository(context).also { instance = it }
+                    instance ?: AlbumRepository(application).also { instance = it }
                 }
     }
 }

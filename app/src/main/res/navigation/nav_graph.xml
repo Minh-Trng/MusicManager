@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/nav_graph"
+            app:startDestination="@id/storedAlbumsFragment">
+
+    <fragment android:id="@+id/storedAlbumsFragment" android:name="de.htwk.musicmanager.storedalbums.StoredAlbumsFragment"
+              android:label="fragment_stored_albums" tools:layout="@layout/fragment_stored_albums">
+        <action android:id="@+id/action_storedAlbumsFragment_to_searchFragment" app:destination="@id/searchFragment"/>
+        <action android:id="@+id/action_storedAlbumsFragment_to_albumDetailFragment"
+                app:destination="@id/albumDetailFragment"/>
+    </fragment>
+    <fragment android:id="@+id/searchFragment" android:name="de.htwk.musicmanager.search.SearchFragment"
+              android:label="fragment_search" tools:layout="@layout/fragment_search">
+        <action android:id="@+id/action_searchFragment_to_albumOverviewFragment"
+                app:destination="@id/albumOverviewFragment"/>
+    </fragment>
+    <fragment android:id="@+id/albumOverviewFragment"
+              android:name="de.htwk.musicmanager.albumoverview.AlbumOverviewFragment"
+              android:label="fragment_album_overview" tools:layout="@layout/fragment_album_overview">
+        <action android:id="@+id/action_albumOverviewFragment_to_albumDetailFragment"
+                app:destination="@id/albumDetailFragment"/>
+    </fragment>
+    <fragment android:id="@+id/albumDetailFragment" android:name="de.htwk.musicmanager.albumdetail.AlbumDetailFragment"
+              android:label="fragment_album_detail" tools:layout="@layout/fragment_album_detail"/>
+</navigation>
