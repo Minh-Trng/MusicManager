@@ -2,9 +2,12 @@ package de.htwk.musicmanager.data.source.database.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverter
 import com.google.gson.*
 import com.google.gson.annotations.SerializedName
+import com.google.gson.reflect.TypeToken
 import de.htwk.musicmanager.data.modelclasses.ImageInfo
+import de.htwk.musicmanager.data.modelclasses.Track
 import java.lang.reflect.Type
 
 @Entity(tableName = "album")
@@ -47,6 +50,16 @@ data class Album(
         companion object {
             val gson = Gson()
         }
+    }
 
+    class TracksConverter{
+        @TypeConverter
+        fun fromTracks(tracks: List<Track>) = Gson().toJson(tracks)
+
+        @TypeConverter
+        fun toGraphPoints(json: String) : List<Track>{
+            val type = object : TypeToken<List<Track>>(){}.type
+            return Gson().fromJson(json, type)
+        }
     }
 }

@@ -5,10 +5,12 @@ import android.app.Application
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import de.htwk.musicmanager.albumdetail.AlbumDetailViewModel
 import de.htwk.musicmanager.albumoverview.AlbumOverviewViewModel
 import de.htwk.musicmanager.data.source.AlbumRepository
 import de.htwk.musicmanager.data.source.Repository
 import de.htwk.musicmanager.search.SearchFragmentViewModel
+import de.htwk.musicmanager.storedalbums.StoredAlbumsViewModel
 
 
 /**
@@ -25,6 +27,10 @@ class ViewModelFactory private constructor(
                     SearchFragmentViewModel(repository)
                 isAssignableFrom(AlbumOverviewViewModel::class.java) ->
                     AlbumOverviewViewModel(repository)
+                isAssignableFrom(AlbumDetailViewModel::class.java) ->
+                    AlbumDetailViewModel(repository)
+                isAssignableFrom(StoredAlbumsViewModel::class.java) ->
+                    StoredAlbumsViewModel(repository)
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }

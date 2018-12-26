@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import de.htwk.musicmanager.databinding.FragmentAlbumOverviewBinding
 import de.htwk.musicmanager.main.MainActivity
@@ -29,7 +30,8 @@ class AlbumOverviewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val adapter = AlbumsRecyclerViewAdapter(ArrayList()){
-            id ->
+            id ->   val action = AlbumOverviewFragmentDirections.actionShowAlbumDetails(id)
+                    Navigation.findNavController(view).navigate(action)
         }
 
         arguments?.let {

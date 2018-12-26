@@ -18,10 +18,12 @@
     <fragment android:id="@+id/albumOverviewFragment"
               android:name="de.htwk.musicmanager.albumoverview.AlbumOverviewFragment"
               android:label="fragment_album_overview" tools:layout="@layout/fragment_album_overview">
-        <action android:id="@+id/action_albumOverviewFragment_to_albumDetailFragment"
+        <action android:id="@+id/action_show_album_details"
                 app:destination="@id/albumDetailFragment"/>
         <argument android:name="artistName" app:argType="string"/>
     </fragment>
     <fragment android:id="@+id/albumDetailFragment" android:name="de.htwk.musicmanager.albumdetail.AlbumDetailFragment"
-              android:label="fragment_album_detail" tools:layout="@layout/fragment_album_detail"/>
+              android:label="fragment_album_detail" tools:layout="@layout/fragment_album_detail">
+        <argument android:name="albumID" app:argType="string"/>
+    </fragment>
 </navigation>
