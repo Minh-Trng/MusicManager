@@ -23,6 +23,7 @@ class SearchFragmentViewModel(private val repository: Repository) : ViewModel() 
             override fun onFailure(call: Call<List<Artist>>, t: Throwable) {
                 isLoading.set(false)
                 errorOnLoading.value = Any() //notifies the observers
+                t.printStackTrace()
             }
 
             override fun onResponse(call: Call<List<Artist>>, response: Response<List<Artist>>) {

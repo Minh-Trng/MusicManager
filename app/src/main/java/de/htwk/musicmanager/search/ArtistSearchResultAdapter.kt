@@ -10,7 +10,10 @@ import de.htwk.musicmanager.R
 import de.htwk.musicmanager.data.modelclasses.Artist
 import kotlinx.android.synthetic.main.item_search_result.view.*
 
-class ArtistSearchResultAdapter(c: Context, private var items: ArrayList<Artist>)
+class ArtistSearchResultAdapter(
+    c: Context,
+    private var items: ArrayList<Artist>,
+    private val callback: (name: String) -> Unit)
     : ArrayAdapter<Artist>(c, R.layout.item_search_result, items) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -21,8 +24,11 @@ class ArtistSearchResultAdapter(c: Context, private var items: ArrayList<Artist>
             resultView = LayoutInflater.from(context).inflate(R.layout.item_search_result, parent, false)
         }
 
-        Picasso.get().load(artist.imageURL).error(android.R.drawable.stat_notify_error).into(resultView!!.imgSearchResultEntry)
+        val imageURL = if (artist.imageURL.isEmpty()) "invalidPath" else artist.imageURL
+        Picasso.get().load(imageURL).error(android.R.drawable.stat_notify_error).into(resultView!!.imgSearchResultEntry)
         resultView.txtSearchResultEntry.text = artist.name
+
+        resultView.setOnClickListener { callback(artist.name)}
 
         return resultView
     }

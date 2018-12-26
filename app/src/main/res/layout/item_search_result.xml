@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <!--image of artist-->
+    <!--image of artistName-->
     <ImageView android:layout_width="50dp"
                android:layout_height="50dp"
                 android:id="@+id/imgSearchResultEntry"/>
 
     <!--name-->
     <TextView android:layout_width="0dp"
-              android:layout_height="wrap_content"
+              android:layout_height="50dp"
+              tools:text="ArtistName"
+              android:gravity="center"
               android:id="@+id/txtSearchResultEntry"
-                android:layout_weight="1"/>
+              android:layout_weight="1" android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
 </LinearLayout>

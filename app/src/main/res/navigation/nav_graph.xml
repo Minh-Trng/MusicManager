@@ -12,7 +12,7 @@
     </fragment>
     <fragment android:id="@+id/searchFragment" android:name="de.htwk.musicmanager.search.SearchFragment"
               android:label="fragment_search" tools:layout="@layout/fragment_search">
-        <action android:id="@+id/action_searchFragment_to_albumOverviewFragment"
+        <action android:id="@+id/action_show_albums_of_artist"
                 app:destination="@id/albumOverviewFragment"/>
     </fragment>
     <fragment android:id="@+id/albumOverviewFragment"
@@ -20,6 +20,7 @@
               android:label="fragment_album_overview" tools:layout="@layout/fragment_album_overview">
         <action android:id="@+id/action_albumOverviewFragment_to_albumDetailFragment"
                 app:destination="@id/albumDetailFragment"/>
+        <argument android:name="artistName" app:argType="string"/>
     </fragment>
     <fragment android:id="@+id/albumDetailFragment" android:name="de.htwk.musicmanager.albumdetail.AlbumDetailFragment"
               android:label="fragment_album_detail" tools:layout="@layout/fragment_album_detail"/>

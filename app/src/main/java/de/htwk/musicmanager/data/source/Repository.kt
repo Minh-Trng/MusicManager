@@ -9,6 +9,8 @@ interface Repository {
 
     fun searchArtists(name: String, callback: Callback<List<Artist>>)
 
+    fun searchAlbums(artistName: String, callback: Callback<List<Album>>)
+
     fun getStoredAlbums() : LiveData<List<Album>>
 
 }

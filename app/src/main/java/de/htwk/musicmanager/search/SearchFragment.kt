@@ -3,13 +3,14 @@ package de.htwk.musicmanager.search
 
 import android.content.Context
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import de.htwk.musicmanager.data.modelclasses.Artist
+import androidx.navigation.Navigation
 import de.htwk.musicmanager.databinding.FragmentSearchBinding
 import de.htwk.musicmanager.main.MainActivity
 import de.htwk.musicmanager.util.obtainViewModel
@@ -27,8 +28,10 @@ class SearchFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val dummyArtist = Artist("test", listOf(Artist.ImageInfo("", ""), Artist.ImageInfo("", "")))
-        val adapter = ArtistSearchResultAdapter(context as Context, arrayListOf())
+        val adapter = ArtistSearchResultAdapter(context as Context, arrayListOf()){
+                name -> val action = SearchFragmentDirections.actionShowAlbumsOfArtist(name)
+                        Navigation.findNavController(view).navigate(action)}
+
         listSearchArtistResults.adapter = adapter
 
         imgSearch.setOnClickListener {
@@ -42,6 +45,15 @@ class SearchFragment : Fragment() {
         viewModel.searchResults.observe(this, Observer {
                 newItems -> adapter.changeItemList(newItems)
         })
+
+        editSearchArtist.setOnKeyListener { v, keyCode, event ->
+            if(event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER){
+                imgSearch.callOnClick()
+                true
+            }else{
+                false
+            }
+        }
 
         super.onViewCreated(view, savedInstanceState)
     }
