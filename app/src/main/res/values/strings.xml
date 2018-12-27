@@ -5,4 +5,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="searchIconTitle">search</string>
     <string name="search_artist_name_hint">Enter artist name</string>
+    <string name="tracks">Tracks:</string>
+    <string name="no_tracks_found">No Tracks Found</string>
 </resources>

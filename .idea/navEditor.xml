@@ -31,7 +31,7 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_albumOverviewFragment_to_albumDetailFragment">
+                            <entry key="action_show_album_details">
                               <value>
                                 <LayoutPositions />
                               </value>

@@ -26,9 +26,7 @@ abstract class AlbumDatabase : RoomDatabase(){
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(
                         context.applicationContext,
-                        AlbumDatabase::class.java, DATABASENAME
-                    )
-                        .allowMainThreadQueries() //todo: später entfernen
+                        AlbumDatabase::class.java, DATABASENAME)
                         .build()
                 }
                 return INSTANCE!!

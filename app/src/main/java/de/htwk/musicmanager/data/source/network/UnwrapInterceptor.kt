@@ -30,6 +30,12 @@ class UnwrapInterceptor : Interceptor {
             json.has("topalbums") -> {
                 json.getJSONObject("topalbums").getJSONArray("album").toString()
             }
+            json.has("album") -> {
+                val modifiedJsonObject = json.getJSONObject("album")
+                val tracks = json.getJSONObject("album").getJSONObject("tracks").getJSONArray("track")
+                modifiedJsonObject.remove("tracks")
+                modifiedJsonObject.put("tracks", tracks).toString()
+            }
             else -> {
                 json.toString()
             }

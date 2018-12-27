@@ -7,6 +7,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import de.htwk.musicmanager.R
+import de.htwk.musicmanager.main.MainActivity
 
 class StoredAlbumsFragment : Fragment() {
 
@@ -19,7 +20,9 @@ class StoredAlbumsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
+        (activity as MainActivity).supportActionBar?.title = "Stored Albums"
+
         return inflater.inflate(R.layout.fragment_stored_albums, container, false)
     }
 

@@ -5,25 +5,27 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import com.google.gson.GsonBuilder
 import de.htwk.musicmanager.data.modelclasses.Artist
+import de.htwk.musicmanager.data.source.database.AlbumDatabase
+import de.htwk.musicmanager.data.source.database.daos.AlbumDao
 import de.htwk.musicmanager.data.source.database.entities.Album
 import de.htwk.musicmanager.data.source.network.LastFMService
 import de.htwk.musicmanager.data.source.network.UnwrapInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Call
 import retrofit2.Callback
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class AlbumRepository private constructor(c: Context): Repository {
 
-    override fun getStoredAlbums(): LiveData<List<Album>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
-    private lateinit var lastFMService: LastFMService
+
+    private var lastFMService: LastFMService
+    private var albumDao: AlbumDao
 
     init {
-
         val gson = GsonBuilder()
             .registerTypeAdapter(Album::class.java, Album.AlbumDeserializer())
             .create()
@@ -40,6 +42,8 @@ class AlbumRepository private constructor(c: Context): Repository {
             .build()
 
         lastFMService = retrofit.create(LastFMService::class.java)
+
+        albumDao = AlbumDatabase.getInstance(c).albumDao()
     }
 
     override fun searchArtists(name: String, callback: Callback<List<Artist>>) {
@@ -62,6 +66,41 @@ class AlbumRepository private constructor(c: Context): Repository {
         options["format"] = "json"
 
         lastFMService.searchAlbums(options).enqueue(callback)
+    }
+
+    override fun searchAlbum(albumID: String, update: (album: Album?) -> Unit) {
+        val album = albumDao.getAlbumByID(albumID)
+        if(album.value == null){
+
+            val options = HashMap<String, String>()
+            options["mbid"] = albumID
+            options["method"] = "album.getinfo"
+            options["api_key"] = LastFMService.API_KEY
+            options["format"] = "json"
+
+            lastFMService.getAlbumDetails(options).enqueue(object : Callback<Album>{
+                override fun onFailure(call: Call<Album>, t: Throwable) {
+                    update(null)
+                    t.printStackTrace()
+                }
+
+                override fun onResponse(call: Call<Album>, response: Response<Album>) {
+                    if(response.body() != null){
+                        update(response.body())
+                    }else{
+                        update(null)
+                    }
+                }
+            })
+
+        }else{
+            update(album.value)
+        }
+
+    }
+
+    override fun getStoredAlbums(): LiveData<List<Album>> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     /**

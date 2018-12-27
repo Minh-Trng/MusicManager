@@ -1,6 +1,7 @@
 package de.htwk.musicmanager.data.source.database.entities
 
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import com.google.gson.*
@@ -11,17 +12,19 @@ import de.htwk.musicmanager.data.modelclasses.Track
 import java.lang.reflect.Type
 
 @Entity(tableName = "album")
-data class Album(
+class Album(
     @SerializedName("mbid")
     @PrimaryKey
-    var id: String,
-    var name : String,
-    val image : List<ImageInfo>,    //val should be ignored by room, due to lack of setter
-    var tracks : List<String> = emptyList()
-){
-    lateinit var artistName : String
+    var id: String = "",
+    var name : String = "",
+    @Ignore
+    val image : List<ImageInfo> = emptyList(),
+    var artistName : String = "",
+    var tracks : List<Track> = emptyList()
+) {
+
     val imageURL : String
-        get() = image[2].url    //medium, sizes range from index 0 to 3
+        get() = if(image.size>0) image[2].url else "invalidPath"    //medium, sizes range from index 0 to 3
 
     /**
      * Problem: depending on the request, the API returns "artist" either as String or JSONObject. This requires
@@ -37,7 +40,7 @@ data class Album(
             jsonObject?.let {
                 val artist : Any = it.get("artist")
                 when (artist) {
-                    is String -> album.artistName = artist
+                    is JsonPrimitive -> album.artistName = artist.toString().replace("\"", "")
                     is JsonObject -> album.artistName = artist.get("name").asString
                     else -> {
                         throw Exception("artist is neither String nor Object")

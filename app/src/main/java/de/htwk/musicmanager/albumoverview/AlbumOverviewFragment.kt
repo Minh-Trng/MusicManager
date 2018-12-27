@@ -22,6 +22,8 @@ class AlbumOverviewFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
+        (activity as MainActivity).supportActionBar?.title = "Top Albums"
+
         viewModel = (activity as MainActivity).obtainViewModel(AlbumOverviewViewModel::class.java)
         val binding = FragmentAlbumOverviewBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
@@ -42,7 +44,7 @@ class AlbumOverviewFragment : Fragment() {
         rvAlbumsOfArtist.layoutManager = GridLayoutManager(context,2)
 
         viewModel.errorOnLoading.observe(this, Observer {
-            Toast.makeText(context, "Error on loading, check your connection", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Error on loading, check your connection", Toast.LENGTH_SHORT).show()
         })
 
         viewModel.albums.observe(this, Observer {

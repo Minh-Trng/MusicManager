@@ -1,14 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".albumdetail.AlbumDetailFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View"/>
+        <variable name="viewModel" type="de.htwk.musicmanager.albumdetail.AlbumDetailViewModel"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment"/>
+            tools:context=".albumdetail.AlbumDetailFragment">
 
-</FrameLayout>
+        <ImageView
+                tools:src="@mipmap/ic_launcher"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/imgAlbumCover" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+                app:album="@{viewModel.album}"
+        />
+        <TextView
+                tools:text="AlbumTitle"
+                android:text="@{viewModel.album.name}"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtAlbumName" app:layout_constraintStart_toEndOf="@+id/imgAlbumCover"
+                android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="@+id/imgAlbumCover"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+        <TextView
+                tools:text="ArtistName"
+                android:text="@{viewModel.album.artistName}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:id="@+id/txtArtistName" app:layout_constraintStart_toEndOf="@+id/imgAlbumCover"
+                android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/txtAlbumName"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imgAlbumCover"/>
+        <ListView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:id="@+id/listTracks"
+                app:layout_constraintTop_toBottomOf="@+id/textView" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp" android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintVertical_bias="0.0" android:layout_marginTop="8dp"/>
+        <TextView
+                android:text="@string/tracks"
+                android:visibility='@{viewModel.album.name.equals("") ? View.GONE : View.VISIBLE}'
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/imgAlbumCover"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+        <ProgressBar
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/progressBar3"
+                android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:layout_marginTop="8dp"
+                app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/listTracks"/>
+        <TextView
+                android:text="@string/no_tracks_found"
+                android:visibility="@{viewModel.album.tracks.size == 0 ? View.VISIBLE : View.GONE}"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:id="@+id/textView2" android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/listTracks"
+                app:layout_constraintStart_toStartOf="@+id/listTracks" android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/textView"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+        <androidx.constraintlayout.widget.Barrier android:layout_width="wrap_content"
+                                                  android:layout_height="wrap_content" android:id="@+id/barrier2"
+                                                  app:barrierDirection="left"/>
+        <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content" android:id="@+id/guideline2"
+                                                    app:layout_constraintGuide_percent="0.33"
+                                                    android:orientation="vertical"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

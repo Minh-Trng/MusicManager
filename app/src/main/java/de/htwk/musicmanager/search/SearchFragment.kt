@@ -24,10 +24,14 @@ class SearchFragment : Fragment() {
         viewModel = (activity as MainActivity).obtainViewModel(SearchFragmentViewModel::class.java)
         val binding = FragmentSearchBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
+
+        (activity as MainActivity).supportActionBar?.title = "Search Artist"
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         val adapter = ArtistSearchResultAdapter(context as Context, arrayListOf()){
                 name -> val action = SearchFragmentDirections.actionShowAlbumsOfArtist(name)
                         Navigation.findNavController(view).navigate(action)}
@@ -39,7 +43,7 @@ class SearchFragment : Fragment() {
         }
 
         viewModel.errorOnLoading.observe(this, Observer {
-            Toast.makeText(context, "Error on loading, check your connection", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Error on loading, check your connection", Toast.LENGTH_SHORT).show()
         })
 
         viewModel.searchResults.observe(this, Observer {
