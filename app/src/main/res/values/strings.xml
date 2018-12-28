@@ -7,4 +7,7 @@
     <string name="search_artist_name_hint">Enter artist name</string>
     <string name="tracks">Tracks:</string>
     <string name="no_tracks_found">No Tracks Found</string>
+    <string name="no_stored_albums_hint">No albums stored yet. Use the search button in the menu to add your favourite
+        music.
+    </string>
 </resources>

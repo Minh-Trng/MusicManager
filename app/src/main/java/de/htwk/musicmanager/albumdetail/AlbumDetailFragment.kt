@@ -51,6 +51,8 @@ class AlbumDetailFragment : Fragment() {
              * [androidx.databinding.BaseObservable] and use @get:Bindable-Annotations. There were multiple approaches
              * that I could think of, but they either did not work or were more complicated, so I decided to
              * stick with this solution
+             * Edit: Not using Databinding at all might have been the best solution, since the backing data
+             * of this fragment does not change in the background or through user Interactions
              */
             binding.viewModel = viewModel
         })

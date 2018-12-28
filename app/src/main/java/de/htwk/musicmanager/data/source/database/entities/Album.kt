@@ -23,8 +23,10 @@ class Album(
     var tracks : List<Track> = emptyList()
 ) {
 
+//    var imageURL : String = if(image.isNotEmpty()) image[2].url else "invalidPath"
+
     val imageURL : String
-        get() = if(image.size>0) image[2].url else "invalidPath"    //medium, sizes range from index 0 to 3
+        get() = if(image.isNotEmpty()) image[2].url else "invalidPath"    //medium, sizes range from index 0 to 3
 
     /**
      * Problem: depending on the request, the API returns "artist" either as String or JSONObject. This requires

@@ -17,8 +17,8 @@ interface AlbumDao {
     fun getAllAlbums() : LiveData<List<Album>>
 
     @Query("SELECT * FROM album WHERE id = :id")
-    fun getAlbumByID(id: String) : LiveData<Album>
+    fun getAlbumByID(id: String) : Album?
 
     @Query("DELETE FROM Album WHERE id = :id")
-    fun deleteAlbumByID(id: String)
+    fun deleteAlbumByID(id: String) : Int
 }

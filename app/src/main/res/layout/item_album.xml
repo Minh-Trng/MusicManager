@@ -30,4 +30,9 @@
             app:layout_constraintTop_toBottomOf="@+id/txtAlbumName" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
     />
+    <de.htwk.musicmanager.reusedui.StoreDeleteImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" app:srcCompat="@android:drawable/ic_menu_save"
+            android:id="@+id/imgStoreDelete" app:layout_constraintEnd_toEndOf="@+id/imgAlbumCover"
+            android:layout_marginEnd="8dp" app:layout_constraintTop_toTopOf="@+id/imgAlbumCover"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,7 +13,8 @@ class AlbumOverviewViewModel(private val repository: Repository) : ViewModel() {
 
     val errorOnLoading = MutableLiveData<Any>()
     val isLoading = ObservableBoolean(false)
-    val albums = MutableLiveData<List<Album>>()
+    val foundAlbums = MutableLiveData<List<Album>>()
+    val storedAlbums = repository.getStoredAlbums()
 
     fun searchAlbums(artistName: String){
 
@@ -31,9 +32,19 @@ class AlbumOverviewViewModel(private val repository: Repository) : ViewModel() {
                 if(response.body() == null){
                     errorOnLoading.value = Any()
                 }else{
-                    albums.value = response.body()
+                    foundAlbums.value = response.body()
                 }
             }
         })
+    }
+
+    fun storeOrDeleteAlbum(albumID: String, messageCallback : (String) -> Unit ){
+        storedAlbums.value?.let {storedAlbumList ->
+            if(storedAlbumList.map { album -> album.id }.contains(albumID)){
+                repository.deleteAlbum(albumID, messageCallback)
+            }else{
+                repository.storeAlbum(albumID, messageCallback)
+            }
+        }
     }
 }

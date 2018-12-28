@@ -22,9 +22,9 @@ class AlbumDetailViewModel(
         isLoading.set(true)
         repository.searchAlbum(id) {
             if(it != null){
-                album.value = it
+                album.postValue(it)
             }else{
-                album.value = Album()
+                album.postValue(Album())
 
                 /**
                  * I am aware that the following is not recommended according to this article:

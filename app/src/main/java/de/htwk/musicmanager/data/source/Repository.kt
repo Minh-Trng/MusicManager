@@ -15,4 +15,8 @@ interface Repository {
 
     fun getStoredAlbums() : LiveData<List<Album>>
 
+    fun storeAlbum(id: String, messageCallback : (String) -> Unit)
+
+    fun deleteAlbum(id: String, messageCallback : (String) -> Unit)
+
 }

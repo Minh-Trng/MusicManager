@@ -7,7 +7,7 @@
     <fragment android:id="@+id/storedAlbumsFragment" android:name="de.htwk.musicmanager.storedalbums.StoredAlbumsFragment"
               android:label="fragment_stored_albums" tools:layout="@layout/fragment_stored_albums">
         <action android:id="@+id/action_storedAlbumsFragment_to_searchFragment" app:destination="@id/searchFragment"/>
-        <action android:id="@+id/action_storedAlbumsFragment_to_albumDetailFragment"
+        <action android:id="@+id/action_show_album_details"
                 app:destination="@id/albumDetailFragment"/>
     </fragment>
     <fragment android:id="@+id/searchFragment" android:name="de.htwk.musicmanager.search.SearchFragment"

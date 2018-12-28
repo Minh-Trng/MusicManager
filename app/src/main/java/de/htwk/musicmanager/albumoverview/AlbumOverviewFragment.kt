@@ -31,9 +31,13 @@ class AlbumOverviewFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val adapter = AlbumsRecyclerViewAdapter(ArrayList()){
-            id ->   val action = AlbumOverviewFragmentDirections.actionShowAlbumDetails(id)
-                    Navigation.findNavController(view).navigate(action)
+        val adapter = AlbumsRecyclerViewAdapter(ArrayList(), { id ->
+            val action = AlbumOverviewFragmentDirections.actionShowAlbumDetails(id)
+            Navigation.findNavController(view).navigate(action)
+        }) { id ->
+            viewModel.storeOrDeleteAlbum(id) { message ->
+                activity?.runOnUiThread { Toast.makeText(context, message, Toast.LENGTH_SHORT).show() }
+            }
         }
 
         arguments?.let {
@@ -41,19 +45,22 @@ class AlbumOverviewFragment : Fragment() {
         }
 
         rvAlbumsOfArtist.adapter = adapter
-        rvAlbumsOfArtist.layoutManager = GridLayoutManager(context,2)
+        rvAlbumsOfArtist.layoutManager = GridLayoutManager(context, 2)
 
         viewModel.errorOnLoading.observe(this, Observer {
             Toast.makeText(context, "Error on loading, check your connection", Toast.LENGTH_SHORT).show()
         })
 
-        viewModel.albums.observe(this, Observer {
-            adapter.changeItemList(it.filter { album -> album.name != "(null)"})
+        viewModel.foundAlbums.observe(this, Observer {
+            adapter.changeItemList(it.filter { album -> album.name != "(null)" })
+        })
+
+        viewModel.storedAlbums.observe(this, Observer {
+            adapter.changeStoredAlbums(it)
         })
 
         super.onViewCreated(view, savedInstanceState)
     }
-
 
 
 }
