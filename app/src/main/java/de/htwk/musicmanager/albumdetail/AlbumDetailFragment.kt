@@ -58,7 +58,7 @@ class AlbumDetailFragment : Fragment() {
         })
 
         viewModel.errorOnLoading.observe(this, Observer {
-            if(it)Toast.makeText(context, "No Data for the selected album found", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "No Data for the selected album found", Toast.LENGTH_SHORT).show()
         })
 
         arguments?.let {

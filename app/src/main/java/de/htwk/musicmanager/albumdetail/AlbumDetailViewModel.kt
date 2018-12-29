@@ -5,15 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import de.htwk.musicmanager.data.source.Repository
 import de.htwk.musicmanager.data.source.database.entities.Album
+import de.htwk.musicmanager.util.SingleLiveEvent
 
 class AlbumDetailViewModel(
     private val repository: Repository
 ) : ViewModel() {
 
-    /**
-     *  has been turned into Type Boolean in order to work with the workaround in [AlbumDetailFragment]
-     */
-    val errorOnLoading = MutableLiveData<Boolean>().apply { value = false }
+    val errorOnLoading = SingleLiveEvent<Any>()
 
     val isLoading = ObservableBoolean(false)
     val album = MutableLiveData<Album>()
@@ -26,12 +24,7 @@ class AlbumDetailViewModel(
             }else{
                 album.postValue(Album())
 
-                /**
-                 * I am aware that the following is not recommended according to this article:
-                 * https://medium.com/androiddevelopers/livedata-with-snackbar-navigation-and-other-events-the-singleliveevent-case-ac2622673150
-                 */
-                errorOnLoading.value = true
-                errorOnLoading.value = false
+                errorOnLoading.call()
             }
             isLoading.set(false)
         }
