@@ -20,4 +20,5 @@ Breakdown of the days:
 
 **Remarks on design decisions:**
 
+* Package-structure: by feature (in my opinion much easier to work with, as coupled classes are easier to find)
 * AlbumRepository is a classical Singleton with getInstance()-method. Another solution would have been using Kotlins Object-class with an init()-Method which is called in an extended application class. Looking back, the latter might have been the better decision, since the Viewmodels would not require the injection of the repository-dependency through the ViewModelFactory in that case.
